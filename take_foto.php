@@ -432,6 +432,12 @@ $result_sql = mysqli_query($conn, $result);
                     <video id="video" width="640" height="480" autoplay></video>
                     <div id="countdown">3</div>
                     <canvas id="canvas" style="position: absolute; top: 0; left: 0;"></canvas>
+                    <style>
+                        #manualCapture {
+                            position: absolute;
+                            z-index: 10;
+                        }
+                    </style>
                     <form id="uploadForm" action="prosesabsen.php" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="image" id="image">
                         <?php
@@ -444,6 +450,7 @@ $result_sql = mysqli_query($conn, $result);
                         <?php
                         }
                         ?>
+                        <button type="submit" class="btn btn-primary" id="manualCapture">Ambil Gambar</button>
                     </form>
                 </div>
 
@@ -531,6 +538,33 @@ $result_sql = mysqli_query($conn, $result);
                         document.getElementById('image').value = dataURL;
                         document.getElementById('uploadForm').submit();
                     }
+
+                    // Event listener untuk tombol manual capture
+                    // document.getElementById('manualCapture').addEventListener('click', function() {
+                    //     startCountdown();
+                    // });
+
+                    // document.getElementById('manualCapture').addEventListener('click', startCountdown);
+
+                    document.getElementById('manualCapture').addEventListener('click', function(event) {
+                        event.preventDefault(); // Mencegah form submit otomatis
+
+                        let countdown = 3; // Durasi hitung mundur (detik)
+                        const button = document.getElementById('manualCapture');
+
+                        // Mengubah teks tombol setiap detik selama hitung mundur
+                        const countdownInterval = setInterval(function() {
+                            button.innerText = `Ambil Gambar (${countdown})`;
+                            countdown--;
+
+                            // Jika hitung mundur selesai
+                            if (countdown < 0) {
+                                clearInterval(countdownInterval);
+                                button.innerText = 'Ambil Gambar';
+                                takeSelfie(); // Ambil gambar setelah hitung mundur selesai
+                            }
+                        }, 1000); // 1000 ms = 1 detik
+                    });
                 </script>
             </div>
             <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-sm-12">
