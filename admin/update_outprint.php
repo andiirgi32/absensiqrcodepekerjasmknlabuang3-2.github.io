@@ -21,10 +21,10 @@
 include "koneksi.php";
 session_start();
 
-$jabatanid = $_POST['jabatanid'];
-$jabatan = $_POST['jabatan'];
+$outprintid = $_POST['outprintid'];
+$outprintas = $_POST['outprintas'];
 
-$sql = mysqli_query($conn, "UPDATE jabatan SET jabatan='$jabatan' WHERE jabatanid='$jabatanid'");
+$sql = mysqli_query($conn, "UPDATE outprint SET outprintas='$outprintas' WHERE outprintid='$outprintid'");
 
 if ($sql) {
 	echo "<script type='text/javascript'>
